@@ -1,0 +1,390 @@
+
+# Python Mega Cheat Sheet
+
+## 1. Data Types and Basic Operations
+
+```python
+# Integers, Floats, Strings
+x = 10
+y = 10.5
+name = "Alice"
+
+# Lists
+lst = [1, 2, 3]
+lst.append(4)
+lst.remove(1)
+print(lst[0])
+
+# Tuples
+tpl = (1, 2, 3)
+print(tpl[1])
+
+# Dictionaries
+d = {'key1': 'value1', 'key2': 'value2'}
+print(d['key1'])
+d['key3'] = 'value3'
+
+# Sets
+s = {1, 2, 3}
+s.add(4)
+s.remove(1)
+```
+
+## 2. Conditionals and Loops
+
+```python
+# If-Else
+x = 5
+if x > 10:
+    print("Greater than 10")
+elif x == 5:
+    print("Equal to 5")
+else:
+    print("Less than 5")
+
+# For Loop
+for i in range(5):
+    print(i)
+
+# While Loop
+x = 0
+while x < 5:
+    print(x)
+    x += 1
+```
+
+## 3. Functions and Methods
+
+```python
+# Basic Function
+def greet(name):
+    return f"Hello, {name}"
+
+print(greet("Alice"))
+
+# Default Arguments
+def add(a, b=10):
+    return a + b
+
+print(add(5))
+
+# __init__ Method (for classes)
+class Dog:
+    def __init__(self, name, breed):
+        self.name = name
+        self.breed = breed
+
+    def bark(self):
+        return f"{self.name} says woof!"
+
+dog = Dog("Rex", "Labrador")
+print(dog.bark())
+```
+
+## 4. File I/O
+
+```python
+# Read File
+with open('file.txt', 'r') as file:
+    content = file.read()
+
+# Write File
+with open('file.txt', 'w') as file:
+    file.write('Hello, world!')
+
+# Line by Line Read
+with open('file.txt', 'r') as file:
+    for line in file:
+        print(line.strip())
+```
+
+## 5. List Comprehensions
+
+```python
+squares = [x**2 for x in range(10)]
+evens = [x for x in range(10) if x % 2 == 0]
+```
+
+## 6. Exception Handling
+
+```python
+try:
+    x = 1 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+finally:
+    print("This runs always")
+```
+
+## 7. Classes and Object-Oriented Programming
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+
+    def bark(self):
+        print(f"{self.name} says woof!")
+
+my_dog = Dog("Rex")
+my_dog.bark()
+```
+
+## 8. Generators
+
+```python
+def count_up_to(max_value):
+    current = 1
+    while current <= max_value:
+        yield current
+        current += 1
+
+gen = count_up_to(3)
+print(next(gen))
+print(next(gen))
+```
+
+## 9. Decorators
+
+```python
+def decorator(func):
+    def wrapper():
+        print("Wrapper")
+        func()
+    return wrapper
+
+@decorator
+def display():
+    print("Display")
+
+display()
+```
+
+## 10. Lambda Functions
+
+```python
+add = lambda x, y: x + y
+print(add(2, 3))
+
+points = [(1, 2), (3, 1)]
+points.sort(key=lambda point: point[1])
+print(points)
+```
+
+## 11. Libraries
+
+### **Matplotlib Example**
+
+```python
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [10, 20, 25, 30]
+plt.plot(x, y)
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.title('Sample Plot')
+plt.show()
+```
+
+### **NumPy Example**
+
+```python
+import numpy as np
+
+# Create an array
+arr = np.array([1, 2, 3, 4, 5])
+print(arr)
+
+# Create a 2D array
+matrix = np.array([[1, 2], [3, 4]])
+print(matrix)
+
+# Operations on arrays
+print(arr + 10)  # Output: [11, 12, 13, 14, 15]
+```
+
+### **pandas Example**
+
+```python
+import pandas as pd
+
+# Create DataFrame from dictionary
+data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+df = pd.DataFrame(data)
+print(df)
+
+# Read from CSV
+df = pd.read_csv('file.csv')
+print(df.head())
+
+# Write to CSV
+df.to_csv('output.csv', index=False)
+```
+
+---
+
+# Python Trivia and Gotchas
+
+## **1. Pass-by-Reference vs. Pass-by-Value**
+
+- **Python is "pass-by-object-reference."** Mutable objects (like lists and dictionaries) can be modified in place, but immutable objects (like integers and strings) cannot.
+- Example:
+
+```python
+def modify_list(lst):
+    lst.append(100)  # Modifies the original list
+
+my_list = [1, 2, 3]
+modify_list(my_list)
+print(my_list)  # Output: [1, 2, 3, 100]
+
+def modify_integer(x):
+    x += 10  # Doesn't modify the original integer
+my_int = 5
+modify_integer(my_int)
+print(my_int)  # Output: 5
+```
+
+## **2. Mutable Default Arguments**
+
+- Python evaluates default argument values only once. If you use a mutable object (e.g., a list) as a default argument, it can retain modifications across function calls.
+
+```python
+def append_to_list(value, lst=[]):
+    lst.append(value)
+    return lst
+
+print(append_to_list(1))  # [1]
+print(append_to_list(2))  # [1, 2]
+```
+
+## **3. Pythonic "Truthiness"**
+
+- In Python, non-zero numbers, non-empty containers, and non-empty strings are considered "truthy."
+- Empty strings, `None`, `0`, empty lists, and empty sets are considered "falsy."
+
+```python
+if []:
+    print("Falsy")  # Won't execute
+if [1, 2]:
+    print("Truthy")  # Executes
+```
+
+## **4. Scope and Variable Lookup**
+
+- Python uses the **LEGB rule** (Local, Enclosing, Global, Built-in) to resolve variable names. If Python can't find a variable in the local scope, it looks outward until it reaches the global scope.
+
+```python
+x = "global"
+
+def outer():
+    x = "enclosing"
+
+    def inner():
+        x = "local"
+        print(x)
+
+    inner()
+
+outer()  # Output: local
+```
+
+## **5. List vs Generator Comprehensions**
+
+- List comprehensions are evaluated eagerly (the entire list is created at once), while generator comprehensions are evaluated lazily (values are produced on-demand).
+
+```python
+# List comprehension
+lst = [x**2 for x in range(10)]
+
+# Generator comprehension
+gen = (x**2 for x in range(10))
+```
+
+## **6. Exception Handling (`else` and `finally`)**
+
+- The `else` block in a `try` block runs only if no exception occurs. The `finally` block always runs.
+
+```python
+try:
+    x = 1 / 1
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+else:
+    print("No exceptions!")
+finally:
+    print("This will always execute")
+```
+
+---
+
+## **Appendix: Example Problems**
+
+### Example Problem 1: Prime Numbers Generator
+
+```python
+def primes(n=1):
+    while n < 100:
+        if is_prime(n):
+            yield n
+        n += 1
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+gen = primes()
+print(next(gen))  # Output: 2
+print(next(gen))  # Output: 3
+print(next(gen))  # Output: 5
+```
+
+### Example Problem 2: Steps Tracker Analysis
+
+```python
+from datetime import date
+import matplotlib.pyplot as plt
+
+day_of_year = date(2019, 3, 1).timetuple().tm_yday
+with open('steps.txt', 'r') as file:
+    steps = [int(line.strip()) for line in file]
+
+# Display steps on March 1st
+print(f"Steps on 03/01: {steps[day_of_year - 1]}")
+
+# Plot steps for the year
+plt.plot(range(1, 366), steps)
+plt.show()
+```
+
+
+
+### Example Problem 3: Recursion - Factorial Calculation
+
+```python
+# Recursive function to calculate the factorial of a number
+def factorial(n):
+    if n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+# Example usage
+print(factorial(5))  # Output: 120
+```
+
+
+### Example Problem 3: Simple Recursion - Factorial Calculation
+
+```python
+def factorial(n):
+    if n == 1:
+        return 1
+    return n * factorial(n - 1)
+
+print(factorial(5))  # Output: 120
+```
